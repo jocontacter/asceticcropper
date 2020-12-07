@@ -68,15 +68,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="shared\*.cs" />
-    <Compile Include="netstandard\*.cs" />
-    <EmbeddedResource Update="netstandard\*.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
+    <Compile Include="**\shared\*.cs" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
-    
+    <Compile Include="**\netstandard\*.cs" />
+    <EmbeddedResource Update="**\netstandard\*.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
@@ -98,7 +97,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.1" />
     <PackageReference Include="NControl.NetCore" Version="1.0.0" />
     <PackageReference Include="NGraphics" Version="0.5.0" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.1.823" />
@@ -106,7 +105,7 @@
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.1.823" />
     <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />
   </ItemGroup>
-
+  
   <!--Additional item groups-->
   <!--
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.TVOS')) ">
@@ -137,4 +136,9 @@
     <Compile Include="**\*.dotnet.cs" />
   </ItemGroup>
   -->
+    
+    <Target AfterTargets="Build" >
+        <Message Importance="High" Text="TargetFramework value is '$(TargetFramework)'" />
+    </Target>
+    
 </Project>
