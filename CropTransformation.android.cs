@@ -1,10 +1,7 @@
-﻿using System;
-using Android.Graphics;
-using Ascetic.UI;
+﻿using Android.Graphics;
 using FFImageLoading.Transformations;
 
-[assembly: Xamarin.Forms.Dependency(typeof(Plugin.AsceticCropper.CropTransformation))]
-namespace Plugin.AsceticCropper
+namespace Ascetic.UI
 {
     public class CropTransformation : TransformationBase, ICropTransformation
     {

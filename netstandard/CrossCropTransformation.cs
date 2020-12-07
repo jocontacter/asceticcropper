@@ -36,7 +36,7 @@ namespace Ascetic.UI
             return null;
 #else
 #pragma warning disable IDE0022 // Use expression body for methods
-            return new AsceticCropperImplementation();
+            return new CropTransformation();
 #pragma warning restore IDE0022 // Use expression body for methods
 #endif
         }

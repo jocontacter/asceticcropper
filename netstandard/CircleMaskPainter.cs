@@ -20,7 +20,7 @@ namespace Ascetic.UI
 
             canvas.DrawEllipse(
                 new Rect(new NGraphics.Point(position.X - size.Width / 2, position.Y - size.Height / 2), size),
-                color: control.BackgroundColor.ToNColor(),
+                color: control.BackgroundColor.AsNColor(),
                 width: maxside);
 
             Pen borderPen = CreateBorderPen(control);

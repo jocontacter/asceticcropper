@@ -260,9 +260,9 @@ namespace Ascetic.UI
         /// <param name="framePadding">Frame padding.</param>
         public Task<Stream> GetImageAsJpegAsync(int quality = 90, int maxWidth = 0, int maxHeight = 0)
         {
-            TaskParameter task = null;
+            throw new NullReferenceException($"{PhotoSource}\n{MaskPainter}\n{CrossCropTransformation.IsSupported}");
 
-            task = ImageService.Instance.LoadFile((PhotoSource as FileImageSource).File);
+            var task = ImageService.Instance.LoadFile((PhotoSource as FileImageSource).File);
 
             var transformations = new List<ITransformation>();
 

@@ -42,24 +42,12 @@ namespace Ascetic.UI
             Xamarin.Forms.BindableProperty.Create(nameof(IsDashed), typeof(bool), typeof(MaskPainter),
                 false, Xamarin.Forms.BindingMode.OneWay);
 
-        public bool IsDashed
-        {
-            get { return (bool)GetValue(IsDashedProperty); }
-            set { SetValue(IsDashedProperty, value); }
-        }
-
         /// <summary>
         /// The border stroke pattern property.
         /// </summary>
         public static Xamarin.Forms.BindableProperty DashPatternStrokeProperty =
             Xamarin.Forms.BindableProperty.Create(nameof(DashPatternStroke), typeof(float), typeof(MaskPainter),
                 4.0f, Xamarin.Forms.BindingMode.OneWay);
-
-        public float DashPatternStroke
-        {
-            get { return (float)FixPlatform((float)GetValue(DashPatternStrokeProperty)); }
-            set { SetValue(DashPatternStrokeProperty, value); }
-        }
 
         /// <summary>
         /// The border stroke pattern property.
@@ -78,11 +66,11 @@ namespace Ascetic.UI
         {
             if (control.BorderColor != Xamarin.Forms.Color.Transparent && control.BorderWidth > 0)
             {
-                var borderPen = new Pen(control.BorderColor.ToNColor(), control.BorderWidth);
+                var borderPen = new Pen(control.BorderColor.AsNColor(), FixPlatform(control.BorderWidth));
 
                 if (IsDashed)
                 {
-                    borderPen.DashPattern = new float[] { DashPatternStroke, DashPatternSpace };
+                    borderPen.DashPattern = new float[] { (float)FixPlatform(DashPatternStroke), (float)FixPlatform(DashPatternSpace) };
                 }
 
                 return borderPen;
@@ -164,6 +152,18 @@ namespace Ascetic.UI
         {
             get { return (double)GetValue(MaskYProperty); }
             set { SetValue(MaskYProperty, value); }
+        }
+
+        public bool IsDashed
+        {
+            get { return (bool)GetValue(IsDashedProperty); }
+            set { SetValue(IsDashedProperty, value); }
+        }
+
+        public float DashPatternStroke
+        {
+            get { return (float)FixPlatform((float)GetValue(DashPatternStrokeProperty)); }
+            set { SetValue(DashPatternStrokeProperty, value); }
         }
     }
 }

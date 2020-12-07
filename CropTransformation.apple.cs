@@ -1,12 +1,10 @@
 ﻿using System;
-using Ascetic.UI;
 using CoreGraphics;
 using FFImageLoading.Transformations;
 using FFImageLoading.Work;
 using UIKit;
 
-[assembly: Xamarin.Forms.Dependency(typeof(Plugin.AsceticCropper.CropTransformation))]
-namespace Plugin.AsceticCropper
+namespace Ascetic.UI
 {
     public class CropTransformation : TransformationBase, ICropTransformation
     {
@@ -35,6 +33,11 @@ namespace Plugin.AsceticCropper
 
         public static UIImage ToCropped(UIImage image, double XOffsetFactor, double YOffsetFactor, double WidthFactor, double HeightFactor)
         {
+            if (image == null)
+            {
+                throw new NullReferenceException("Bitmap is null!");
+            }
+
             var imgSize = image.Size;
             UIGraphics.BeginImageContextWithOptions(new CGSize(WidthFactor * imgSize.Width, HeightFactor * imgSize.Height), false, (nfloat)0.0);
 

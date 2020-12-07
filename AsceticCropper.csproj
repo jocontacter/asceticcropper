@@ -13,9 +13,9 @@
     netstandard1.0;netstandard2.0;MonoAndroid90;Xamarin.iOS10;uap10.0.16299;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;Tizen40
     For UWP update the version number with a version number you have installed.
     -->
-    <AssemblyName>Plugin.AsceticCropper</AssemblyName>
-    <RootNamespace>Plugin.AsceticCropper</RootNamespace>
-    <PackageId>Plugin.AsceticCropper</PackageId>
+    <AssemblyName>Ascetic.Plugins.Cropper</AssemblyName>
+    <RootNamespace>Ascetic.UI</RootNamespace>
+    <PackageId>Ascetic.Plugins.Cropper</PackageId>
     
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -35,23 +35,26 @@
     
     <!--TODO: Fill these in-->
     <PackageLicenseUrl>LINK TO LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>LINK TO PROJECT</PackageProjectUrl>
-    <RepositoryUrl>LINK TO PROJECT</RepositoryUrl>
-    <PackageReleaseNotes>RELEASE NOTES</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/jocontacter/asceticcropper</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jocontacter/asceticcropper</RepositoryUrl>
+    <PackageReleaseNotes>first release</PackageReleaseNotes>
     <PackageIconUrl>ICON URL</PackageIconUrl>
     <PackageTags>xamarin, ios, android, xamarin.forms, plugin, AsceticCropper, cropper</PackageTags>
     
-    <Title>AsceticCropper Plugin for Xamarin and Windows</Title>
+    <Title>Ascetic Cropper Plugin for Xamarin.Forms</Title>
     <Summary>Summary of nuget</Summary>
-    <Description>Plugin Description</Description>
+    <Description>Cross platform cropper</Description>
     
     
     <Owners>Ascetic Soft</Owners>
-    <Authors>Eugeny Stepanov</Authors>
+    <Authors>Evgeny Stepanov</Authors>
     <Copyright>Copyright 2017</Copyright>
 
     <!--When built in 2019 will remove extra references on pack-->
     <DisableExtraReferences>true</DisableExtraReferences>
+    <RepositoryType>github</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>Evgeny Stepanov</Company>
     
   </PropertyGroup>
 
@@ -65,14 +68,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="**\shared\*.cs" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+    <Compile Include="shared\*.cs" />
     <Compile Include="netstandard\*.cs" />
     <EmbeddedResource Update="netstandard\*.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+    
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">

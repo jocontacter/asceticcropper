@@ -31,11 +31,11 @@ namespace Ascetic.UI
 
             var position = new NGraphics.Point(MaskX, MaskY);
             var bounds = new Rect(new NGraphics.Point(position.X - size.Width / 2, position.Y - size.Height / 2), size);
-            Pen borderPen = new Pen(control.BackgroundColor.ToNColor(), maxside);
+            Pen borderPen = new Pen(control.BackgroundColor.AsNColor(), maxside);
 
             if (CornerRadius > 0)
             {
-                var pathArray = MakePathArray(bounds, CornerRadius);
+                var pathArray = MakePathArray(bounds, FixPlatform(CornerRadius));
                 canvas.DrawPath(pathArray, borderPen);
             }
             else
@@ -49,7 +49,7 @@ namespace Ascetic.UI
 
             if (CornerRadius > 0)
             {
-                var pathArray = MakePathArray(square, CornerRadius);
+                var pathArray = MakePathArray(square, FixPlatform(CornerRadius));
                 canvas.DrawPath(pathArray, borderPen);
             }
             else
