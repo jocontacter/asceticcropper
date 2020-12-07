@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Class="Ascetic.UI.ImageCropperView"
+      xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+      xmlns:ui="clr-namespace:Ascetic.UI">
+
+    <ff:CachedImage x:Name="image" HorizontalOptions="Fill" VerticalOptions="Fill" Aspect="AspectFit"
+                        Success="CachedImage_Success"/>
+
+    <ui:CropperControl x:Name="frame" BackgroundColor="#B3222222" AnchorX=".5" AnchorY=".5" BorderColor="BurlyWood" BorderWidth="5"
+                        HorizontalOptions="Fill" VerticalOptions="Fill"/>
+
+    <ContentView HorizontalOptions="Fill" VerticalOptions="Fill" AnchorX=".5" AnchorY=".5">
+        <ContentView.GestureRecognizers>
+            <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
+            <PinchGestureRecognizer PinchUpdated="PinchGestureRecognizer_PinchUpdated"/>
+        </ContentView.GestureRecognizers>
+    </ContentView>
+
+    <!--<ff:CachedImage Source="{Binding ResultPhotoSource}" VerticalOptions="End" HorizontalOptions="Center" WidthRequest="170" HeightRequest="170" Aspect="AspectFit">
+            <ff:CachedImage.Transformations>
+                <fftr:CircleTransformation />
+            </ff:CachedImage.Transformations>
+        </ff:CachedImage>-->
+</Grid>
