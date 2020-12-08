@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:Ascetic.UI;assembly=Ascetic.Plugins.Cropper"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="Example.MainPage">
+
+    <Grid RowDefinitions="60,*,20,*">
+        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
+            <Label Text="Ascetic cropper" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" VerticalTextAlignment="Center"/>
+        </Frame>
+
+        <ui:ImageCropperView x:Name="cropper" Grid.Row="1" PhotoSource="https://static.toiimg.com/photo/msid-58515713,width-96,height-65.cms" HorizontalOptions="Fill" VerticalOptions="FillAndExpand"
+                             BackgroundColor="#B3222222" BorderWidth="5" BorderColor="Blue">
+            <!-- MaskWidth and MaskHeight is mask proportions -->
+            <!-- OR use rectangle painter -->
+            <!-- OR use circle painter -->
+
+            <!--<ui:ImageCropperView.MaskPainter>
+                <ui:RectangleMaskPainter CornerRadius="40" IsDashed="True" DashPatternSpace="6" DashPatternStroke="6" MaskWidth="1.5" MaskHeight="1" />
+            </ui:ImageCropperView.MaskPainter>-->
+            
+            <ui:ImageCropperView.MaskPainter>
+                <ui:CircleMaskPainter IsDashed="True" DashPatternSpace="6" DashPatternStroke="6" MaskHeight="1" MaskWidth="1.2"/>
+            </ui:ImageCropperView.MaskPainter>
+        </ui:ImageCropperView>
+        <Button Grid.Row="2" Command="{Binding CropCommand}" Text="Crop!" HorizontalOptions="Center" WidthRequest="150"/>
+        <Image Grid.Row="3" Source="{Binding ResultPhotoSource}" HorizontalOptions="Fill" VerticalOptions="FillAndExpand"/>
+    </Grid>
+
+</ContentPage>

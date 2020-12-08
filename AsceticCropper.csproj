@@ -21,7 +21,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
     <Version>1.0.0.0</Version>
-    <PackageVersion>1.0.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>default</LangVersion>
@@ -67,15 +67,23 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType></DebugType>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="**\shared\*.cs" />
+    <EmbeddedResource Remove="Example\App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="shared\*.cs" />
+    <Compile Include="netstandard\*.cs" />
+    <EmbeddedResource Update="netstandard\*.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
-    <Compile Include="**\netstandard\*.cs" />
-    <EmbeddedResource Update="**\netstandard\*.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
+    
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
@@ -97,7 +105,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.0" />
     <PackageReference Include="NControl.NetCore" Version="1.0.0" />
     <PackageReference Include="NGraphics" Version="0.5.0" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.1.823" />
@@ -105,7 +113,7 @@
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.1.823" />
     <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />
   </ItemGroup>
-  
+
   <!--Additional item groups-->
   <!--
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.TVOS')) ">
@@ -136,9 +144,19 @@
     <Compile Include="**\*.dotnet.cs" />
   </ItemGroup>
   -->
-    
-    <Target AfterTargets="Build" >
-        <Message Importance="High" Text="TargetFramework value is '$(TargetFramework)'" />
-    </Target>
-    
+  <ItemGroup>
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon167.png" />
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon29.png" />
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon1024.png" />
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon60.png" />
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon76.png" />
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon58.png" />
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon40.png" />
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon80.png" />
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Contents.json" />
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon87.png" />
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon120.png" />
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon20.png" />
+    <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon180.png" />
+  </ItemGroup>
 </Project>

@@ -24,7 +24,7 @@ namespace Ascetic.UI
                 width: maxside);
 
             Pen borderPen = CreateBorderPen(control);
-            var square = new NGraphics.Rect(position - maskHeight / 2, new NGraphics.Size(maskHeight));
+            var square = new NGraphics.Rect(new NGraphics.Point(position.X - maskWidth / 2, position.Y - maskHeight / 2), new NGraphics.Size(maskWidth, maskHeight));
             canvas.DrawEllipse(square, borderPen);
         }
     }

@@ -26,10 +26,16 @@ namespace Ascetic.UI
 
         public override void Paint(CropperControl control, ICanvas canvas, Rect rect)
         {
-            var maxside = Math.Max(rect.Width - MaskWidth, rect.Height - MaskHeight);
-            Size size = new NGraphics.Size(maxside + MaskWidth, maxside + MaskHeight);
+            var maskHeight = FixPlatform(MaskHeight);
+            var maskWidth = FixPlatform(MaskWidth);
+            var x = FixPlatform(MaskX);
+            var y = FixPlatform(MaskY);
 
-            var position = new NGraphics.Point(MaskX, MaskY);
+            var maxside = Math.Max(rect.Width - maskWidth, rect.Height - maskHeight);
+            maxside += FixPlatform(CornerRadius);
+            Size size = new NGraphics.Size(maxside + maskWidth, maxside + maskHeight);
+
+            var position = new NGraphics.Point(x, y);
             var bounds = new Rect(new NGraphics.Point(position.X - size.Width / 2, position.Y - size.Height / 2), size);
             Pen borderPen = new Pen(control.BackgroundColor.AsNColor(), maxside);
 
@@ -44,8 +50,8 @@ namespace Ascetic.UI
             }
 
             borderPen = CreateBorderPen(control);
-            var square = new NGraphics.Rect(new NGraphics.Point(position.X - MaskWidth / 2, position.Y - MaskHeight / 2),
-                new NGraphics.Size(MaskWidth, MaskHeight));
+            var square = new NGraphics.Rect(new NGraphics.Point(position.X - maskWidth / 2, position.Y - maskHeight / 2),
+                new NGraphics.Size(maskWidth, maskHeight));
 
             if (CornerRadius > 0)
             {

@@ -12,14 +12,14 @@ namespace Ascetic.UI
         /// </summary>
         public static Xamarin.Forms.BindableProperty MaskWidthProperty =
             Xamarin.Forms.BindableProperty.Create(nameof(MaskWidth), typeof(double), typeof(MaskPainter),
-                0.0, Xamarin.Forms.BindingMode.OneWay);
+                1.0, Xamarin.Forms.BindingMode.OneWay);
 
         /// <summary>
         /// The Mask height property.
         /// </summary>
         public static Xamarin.Forms.BindableProperty MaskHeightProperty =
             Xamarin.Forms.BindableProperty.Create(nameof(MaskHeight), typeof(double), typeof(MaskPainter),
-                0.0, Xamarin.Forms.BindingMode.OneWay);
+                1.0, Xamarin.Forms.BindingMode.OneWay);
 
         /// <summary>
         /// The Mask X property.
