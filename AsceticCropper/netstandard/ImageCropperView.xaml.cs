@@ -235,6 +235,11 @@ namespace Ascetic.UI
 
                     MaskPainter.MaskWidth = w;
                     MaskPainter.MaskHeight = h;
+                    if(MaskPainter is RectangleMaskPainter rectanglePainter)
+                    {
+                        rectanglePainter.CornerRadius *= e.Scale;
+                    }
+
                     MaskPainter.InvokeInvalidate();
                 }
             }
@@ -313,15 +318,16 @@ namespace Ascetic.UI
         /// <param name="quality">Quality.</param>
         /// <param name="maxWidth">Max width.</param>
         /// <param name="maxHeight">Max height.</param>
-        /// <param name="framePadding">Frame padding.</param>
         public Task<Stream> GetImageAsJpegAsync(int quality = 90, int maxWidth = 0, int maxHeight = 0)
         {
             TaskParameter task = null;
 
             if(PhotoSource is FileImageSource file)
             {
-                if(file.File.Split('/').Length == 1)
+                
+                if (file.File.Split('/').Length == 1)
                 {
+                    // Here we when resource file used.
                     task = ImageService.Instance.LoadCompiledResource(file.File);
                 }
                 else

@@ -124,7 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.0" />
     <PackageReference Include="NControl.NetCore">
       <Version>1.0.0</Version>
     </PackageReference>
@@ -134,7 +134,7 @@
       <Project>{0BE298A7-67BB-4B9A-9ADB-93BA56CE2EB0}</Project>
       <Name>Example</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AsceticCropper.csproj">
+    <ProjectReference Include="..\AsceticCropper\AsceticCropper.csproj">
       <Project>{53F2DCD3-21F7-4164-8071-E16573C44134}</Project>
       <Name>AsceticCropper</Name>
     </ProjectReference>

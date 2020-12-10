@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsceticCropper", "AsceticCropper.csproj", "{53F2DCD3-21F7-4164-8071-E16573C44134}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsceticCropper", "AsceticCropper\AsceticCropper.csproj", "{53F2DCD3-21F7-4164-8071-E16573C44134}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Android", "Example.Android\Example.Android.csproj", "{783811C8-82D7-4014-AE56-6996897542F4}"
 EndProject
