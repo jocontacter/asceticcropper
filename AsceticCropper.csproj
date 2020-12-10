@@ -159,4 +159,9 @@
     <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon20.png" />
     <None Remove="Example.iOS\obj\iPhoneSimulator\Debug\device-builds\iphone se %282nd generation%29-14.2\actool\cloned-assets\Assets.xcassets\AppIcon.appiconset\Icon180.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="netstandard\CornersEnum.cs">
+      <SubType></SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

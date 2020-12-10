@@ -10,7 +10,7 @@ namespace Ascetic.UI
 {
     public partial class ImageCropperView : Grid
     {
-        public static readonly BindableProperty MaskPainterProperty = BindableProperty.Create(nameof(MaskPainter), typeof(MaskPainter), typeof(ImageCropperView), new CircleMaskPainter() { IsDashed = true, MaskWidth = 100, MaskHeight = 100 }, BindingMode.OneWay);
+        public static readonly BindableProperty MaskPainterProperty = BindableProperty.Create(nameof(MaskPainter), typeof(MaskPainter), typeof(ImageCropperView), new CircleMaskPainter() { MaskWidth = 100, MaskHeight = 100 }, BindingMode.OneWay);
         public static readonly BindableProperty PhotoSourceProperty = BindableProperty.Create(nameof(PhotoSource), typeof(Xamarin.Forms.ImageSource), typeof(ImageCropperView), null, BindingMode.OneWay);
         /// <summary>
         /// Background color property.
@@ -29,6 +29,27 @@ namespace Ascetic.UI
         /// </summary>
         public static BindableProperty BorderColorProperty =
             BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(ImageCropperView), Color.CornflowerBlue, BindingMode.OneWay);
+
+        /// <summary>
+        /// The border dash property.
+        /// </summary>
+        public static Xamarin.Forms.BindableProperty IsDashedProperty =
+            Xamarin.Forms.BindableProperty.Create(nameof(IsDashed), typeof(bool), typeof(ImageCropperView),
+                false, Xamarin.Forms.BindingMode.OneWay);
+
+        /// <summary>
+        /// The border stroke pattern property.
+        /// </summary>
+        public static Xamarin.Forms.BindableProperty DashPatternStrokeProperty =
+            Xamarin.Forms.BindableProperty.Create(nameof(DashPatternStroke), typeof(float), typeof(ImageCropperView),
+                4.0f, Xamarin.Forms.BindingMode.OneWay);
+
+        /// <summary>
+        /// The border stroke pattern spacing property.
+        /// </summary>
+        public static Xamarin.Forms.BindableProperty DashPatternSpaceProperty =
+            Xamarin.Forms.BindableProperty.Create(nameof(DashPatternSpace), typeof(float), typeof(ImageCropperView),
+                4.0f, Xamarin.Forms.BindingMode.OneWay);
 
         /// <summary>
         /// Gets or sets the color which will fill the border of a VisualElement. This is a bindable property.
@@ -66,31 +87,66 @@ namespace Ascetic.UI
             set => SetValue(MaskPainterProperty, value);
         }
 
+        /// <summary>
+        /// Gets or sets the dash which will have the border of a VisualElement. This is a bindable property.
+        /// </summary>
+        /// <value>The width of the border.</value>
+        public bool IsDashed
+        {
+            get { return (bool)GetValue(IsDashedProperty); }
+            set { SetValue(IsDashedProperty, value); }
+        }
+
+        /// <summary>
+        /// The border stroke pattern property.
+        /// </summary>
+        public float DashPatternStroke
+        {
+            get { return (float)GetValue(DashPatternStrokeProperty); }
+            set { SetValue(DashPatternStrokeProperty, value); }
+        }
+
+        /// <summary>
+        /// The border stroke pattern spacing property.
+        /// </summary>
+        public float DashPatternSpace
+        {
+            get { return (float)GetValue(DashPatternSpaceProperty); }
+            set { SetValue(DashPatternSpaceProperty, value); }
+        }
+
         public Xamarin.Forms.ImageSource PhotoSource => (Xamarin.Forms.ImageSource)GetValue(PhotoSourceProperty);
 
         protected override void OnPropertyChanged(string propertyName)
         {
             base.OnPropertyChanged(propertyName);
 
-            if (propertyName == MaskPainterProperty.PropertyName)
+            switch (propertyName)
             {
-                frame.CustomPainter = MaskPainter;
-            }
-            else if (propertyName == PhotoSourceProperty.PropertyName)
-            {
-                image.Source = PhotoSource;
-            }
-            else if (propertyName == BackgroundColorProperty.PropertyName)
-            {
-                frame.BackgroundColor = BackgroundColor;
-            }
-            else if (propertyName == BorderColorProperty.PropertyName)
-            {
-                frame.BorderColor = BorderColor;
-            }
-            else if (propertyName == BorderWidthProperty.PropertyName)
-            {
-                frame.BorderWidth = BorderWidth;
+                case nameof(MaskPainter):
+                    frame.CustomPainter = MaskPainter;
+                    break;
+                case nameof(PhotoSource):
+                    image.Source = PhotoSource;
+                    break;
+                case nameof(BackgroundColor):
+                    frame.BackgroundColor = BackgroundColor;
+                    break;
+                case nameof(BorderColor):
+                    frame.BorderColor = BorderColor;
+                    break;
+                case nameof(BorderWidth):
+                    frame.BorderWidth = BorderWidth;
+                    break;
+                case nameof(IsDashed):
+                    frame.IsDashed = IsDashed;
+                    break;
+                case nameof(DashPatternStroke):
+                    frame.DashPatternStroke = DashPatternStroke;
+                    break;
+                case nameof(DashPatternSpace):
+                    frame.DashPatternSpace = DashPatternSpace;
+                    break;
             }
         }
 
@@ -264,7 +320,14 @@ namespace Ascetic.UI
 
             if(PhotoSource is FileImageSource file)
             {
-                task = ImageService.Instance.LoadFile(file.File);
+                if(file.File.Split('/').Length == 1)
+                {
+                    task = ImageService.Instance.LoadCompiledResource(file.File);
+                }
+                else
+                {
+                    task = ImageService.Instance.LoadFile(file.File);
+                }
             }
             else if(PhotoSource is StreamImageSource stream)
             {

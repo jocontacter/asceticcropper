@@ -10,18 +10,18 @@
             <Label Text="Ascetic cropper" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" VerticalTextAlignment="Center"/>
         </Frame>
 
-        <ui:ImageCropperView x:Name="cropper" Grid.Row="1" PhotoSource="https://static.toiimg.com/photo/msid-58515713,width-96,height-65.cms" HorizontalOptions="Fill" VerticalOptions="FillAndExpand"
-                             BackgroundColor="#B3222222" BorderWidth="5" BorderColor="Blue">
+        <ui:ImageCropperView x:Name="cropper" Grid.Row="1" PhotoSource="img" HorizontalOptions="Fill" VerticalOptions="FillAndExpand"
+                             BackgroundColor="#B3222222" BorderWidth="5" BorderColor="Blue" IsDashed="True" DashPatternSpace="6" DashPatternStroke="6">
             <!-- MaskWidth and MaskHeight is mask proportions -->
             <!-- OR use rectangle painter -->
             <!-- OR use circle painter -->
 
             <!--<ui:ImageCropperView.MaskPainter>
-                <ui:RectangleMaskPainter CornerRadius="40" IsDashed="True" DashPatternSpace="6" DashPatternStroke="6" MaskWidth="1.5" MaskHeight="1" />
+                <ui:RectangleMaskPainter CornerRadius="40" MaskWidth="1.5" MaskHeight="1" />
             </ui:ImageCropperView.MaskPainter>-->
             
             <ui:ImageCropperView.MaskPainter>
-                <ui:CircleMaskPainter IsDashed="True" DashPatternSpace="6" DashPatternStroke="6" MaskHeight="1" MaskWidth="1.2"/>
+                <ui:CircleMaskPainter MaskHeight="1" MaskWidth="1.2"/>
             </ui:ImageCropperView.MaskPainter>
         </ui:ImageCropperView>
         <Button Grid.Row="2" Command="{Binding CropCommand}" Text="Crop!" HorizontalOptions="Center" WidthRequest="150"/>
