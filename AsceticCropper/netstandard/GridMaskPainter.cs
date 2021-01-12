@@ -7,7 +7,7 @@ namespace Ascetic.UI
     public class GridMaskPainter : MaskPainter
     {
         public static Xamarin.Forms.BindableProperty CornerLengthProperty =
-            Xamarin.Forms.BindableProperty.Create(nameof(CornerLength), typeof(double), typeof(RectangleMaskPainter),
+            Xamarin.Forms.BindableProperty.Create(nameof(CornerLength), typeof(double), typeof(GridMaskPainter),
         0.0, Xamarin.Forms.BindingMode.OneWay);
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace Ascetic.UI
         }
 
         public static Xamarin.Forms.BindableProperty CornerWidthProperty =
-            Xamarin.Forms.BindableProperty.Create(nameof(CornerWidth), typeof(double), typeof(RectangleMaskPainter),
+            Xamarin.Forms.BindableProperty.Create(nameof(CornerWidth), typeof(double), typeof(GridMaskPainter),
         0.0, Xamarin.Forms.BindingMode.OneWay);
 
         /// <summary>
@@ -63,13 +63,13 @@ namespace Ascetic.UI
 
             if (CornerLength > 0 && CornerWidth > 0)
             {
-                canvas.DrawPath(MakeRecPathArray(borderBounds), new Pen(borderPen.Color, CornerWidth));
+                canvas.DrawPath(MakeGridPathArray(borderBounds), new Pen(borderPen.Color, FixPlatform(CornerWidth)));
             }
         }
 
-        protected virtual IEnumerable<PathOp> MakeRecPathArray(Rect r)
+        protected virtual IEnumerable<PathOp> MakeGridPathArray(Rect r)
         {
-            var length = CornerLength;
+            var length = FixPlatform(CornerLength);
             var path = new List<PathOp>{
                 new MoveTo(r.Left, r.Top + length),
                 new LineTo(r.Left, r.Top),
