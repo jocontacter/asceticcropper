@@ -143,4 +143,9 @@ Added posibility to separated corner rounding.</PackageReleaseNotes>
     <Compile Include="**\*.dotnet.cs" />
   </ItemGroup>
   -->
+  <ItemGroup>
+    <Compile Update="netstandard\GridMaskPainter.cs">
+      <SubType></SubType>
+    </Compile>
+  </ItemGroup>
 </Project>
