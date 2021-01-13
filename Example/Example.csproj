@@ -11,11 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
+    <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.0" />
     <PackageReference Include="NControl.NetCore" Version="1.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AsceticCropper\AsceticCropper.csproj" />
+    <PackageReference Include="Ascetic.Plugins.Cropper" Version="1.0.2" />
   </ItemGroup>
 </Project>

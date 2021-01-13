@@ -4,7 +4,14 @@
              xmlns:ui="clr-namespace:Ascetic.UI;assembly=Ascetic.Plugins.Cropper"
              x:Class="Example.MainPage">
 
-    <Grid RowDefinitions="60,*,35,*">
+    <Grid VerticalOptions="Fill">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="16"/>
+        </Grid.RowDefinitions>
 
         <ui:ImageCropperView x:Name="cropper" Grid.Row="1" PhotoSource="img" HorizontalOptions="Fill" VerticalOptions="FillAndExpand"
                              BackgroundColor="#B3222222" BorderWidth="5" BorderColor="#A553E8" IsDashed="True" DashPatternSpace="6" DashPatternStroke="6">
