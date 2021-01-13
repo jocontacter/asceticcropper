@@ -24,7 +24,7 @@
              <!--<ui:RectangleMaskPainter CornerRadius="25" Corners="TopLeft,TopRight" MaskWidth="1" MaskHeight="1.3" />--> 
 
             <!-- square with rounded corners -->
-            <!--<ui:RectangleMaskPainter CornerRadius="20" Corners="All" MaskWidth="1" MaskHeight="1" />-->
+            <ui:RectangleMaskPainter CornerRadius="10" Corners="All" MaskWidth="2" MaskHeight="1" />
 
             <!-- square -->
             <!--<ui:RectangleMaskPainter CornerRadius="20" Corners="None" MaskWidth="1" MaskHeight="1" />-->
@@ -33,7 +33,7 @@
             <!--<ui:CircleMaskPainter MaskHeight="1" MaskWidth="1.2"/>-->
 
             <!-- circle -->
-            <ui:CircleMaskPainter MaskHeight="1.4" MaskWidth="1"/>
+            <!--<ui:CircleMaskPainter MaskHeight="1" MaskWidth="1.4"/>-->
            
             </ui:ImageCropperView.MaskPainter>
         </ui:ImageCropperView>

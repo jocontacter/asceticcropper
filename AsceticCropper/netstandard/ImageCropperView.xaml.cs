@@ -155,6 +155,10 @@ namespace Ascetic.UI
         double startX;
         double startY;
         double imageScale;
+        //to exclude approximations during multiple scalings in pinch gestures
+        double originalMaskWidth;
+        double originalMaskScale;
+        double originalCornerRadius;
         double imageWidth;
         double imageHeight;
         double horizontalPadding;
@@ -200,48 +204,49 @@ namespace Ascetic.UI
                 var w = MaskPainter.MaskWidth * e.Scale;
                 var h = MaskPainter.MaskHeight * e.Scale;
 
-                if (w >= 100 && h >= 100)// && IsFitsIn(w, h)
+                w = Clamp(w, 100, imageWidth);
+                h = Clamp(h, w / originalMaskScale, imageHeight);
+
+                var xminoffset = MaskPainter.MaskX - (horizontalPadding + w / 2);
+                var xmaxoffset = (horizontalPadding + imageWidth - w / 2) - MaskPainter.MaskX;
+                var yminoffset = MaskPainter.MaskY - (verticalPadding + h / 2);
+                var ymaxoffset = (verticalPadding + imageHeight - h / 2) - MaskPainter.MaskY;
+
+                if (xminoffset <= 0 && xmaxoffset <= 0)
                 {
-                    var xminoffset = MaskPainter.MaskX - (horizontalPadding + w / 2);
-                    var xmaxoffset = (horizontalPadding + imageWidth - w / 2) - MaskPainter.MaskX;
-                    var yminoffset = MaskPainter.MaskY - (verticalPadding + h / 2);
-                    var ymaxoffset = (verticalPadding + imageHeight - h / 2) - MaskPainter.MaskY;
-
-                    if (xminoffset <= 0 && xmaxoffset <= 0)
-                    {
-                        return;
-                    }
-                    if (yminoffset <= 0 && ymaxoffset <= 0)
-                    {
-                        return;
-                    }
-
-                    if (xminoffset < 0)
-                    {
-                        MaskPainter.MaskX -= xminoffset;
-                    }
-                    if (xmaxoffset < 0 && xminoffset > 0)
-                    {
-                        MaskPainter.MaskX += xmaxoffset;
-                    }
-                    if (yminoffset < 0)
-                    {
-                        MaskPainter.MaskY -= yminoffset;
-                    }
-                    if (ymaxoffset < 0)
-                    {
-                        MaskPainter.MaskY += ymaxoffset;
-                    }
-
-                    MaskPainter.MaskWidth = w;
-                    MaskPainter.MaskHeight = h;
-                    if(MaskPainter is RectangleMaskPainter rectanglePainter)
-                    {
-                        rectanglePainter.CornerRadius *= e.Scale;
-                    }
-
-                    MaskPainter.InvokeInvalidate();
+                    return;
                 }
+                if (yminoffset <= 0 && ymaxoffset <= 0)
+                {
+                    return;
+                }
+
+                if (xminoffset < 0)
+                {
+                    MaskPainter.MaskX -= xminoffset;
+                }
+                if (xmaxoffset < 0 && xminoffset > 0)
+                {
+                    MaskPainter.MaskX += xmaxoffset;
+                }
+                if (yminoffset < 0)
+                {
+                    MaskPainter.MaskY -= yminoffset;
+                }
+                if (ymaxoffset < 0)
+                {
+                    MaskPainter.MaskY += ymaxoffset;
+                }
+
+                MaskPainter.MaskWidth = w;
+                MaskPainter.MaskHeight = h;
+                if(MaskPainter is RectangleMaskPainter rectanglePainter)
+                {
+                    var currentScale = MaskPainter.MaskWidth / originalMaskWidth;
+                    rectanglePainter.CornerRadius = originalCornerRadius * currentScale * e.Scale;
+                }
+
+                MaskPainter.InvokeInvalidate();
             }
         }
 
@@ -296,6 +301,7 @@ namespace Ascetic.UI
                 MaskPainter.MaskY = image.Height / 2;
                 var min = Math.Min(imageWidth, imageHeight);
                 var maskScale = MaskPainter.MaskWidth / MaskPainter.MaskHeight;
+
                 if (min == imageWidth)
                 {
                     MaskPainter.MaskWidth = imageWidth;
@@ -306,6 +312,11 @@ namespace Ascetic.UI
                     MaskPainter.MaskHeight = imageHeight;
                     MaskPainter.MaskWidth = MaskPainter.MaskHeight * maskScale;
                 }
+
+                //saving reference values 
+                originalMaskScale = maskScale;
+                originalMaskWidth = MaskPainter.MaskWidth;
+                originalCornerRadius = (MaskPainter as RectangleMaskPainter)?.CornerRadius ?? 0;
 
                 MaskPainter.InvokeInvalidate();
             });
