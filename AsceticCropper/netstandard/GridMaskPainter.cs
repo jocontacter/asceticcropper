@@ -25,70 +25,83 @@ namespace Ascetic.UI
         0.0, Xamarin.Forms.BindingMode.OneWay);
 
         /// <summary>
-        /// Gets or sets the corner length which will have the border of a VisualElement. This is a bindable property.
+        /// Gets or sets the corner weight which will have the border of a VisualElement. This is a bindable property.
         /// </summary>
-        /// <value>The length of the corners.</value>
+        /// <value>The weight of the corners.</value>
         public double CornerWidth
         {
             get { return (double)GetValue(CornerWidthProperty); }
             set { SetValue(CornerWidthProperty, value); }
         }
 
-        public override void Paint(CropperControl control, ICanvas canvas, Rect rect)
+        public override void Paint(CropperControl control, ICanvas canvas, Rect controlBounds)
         {
             var maskWidth = FixPlatform(MaskWidth);
             var maskHeight = FixPlatform(MaskHeight);
             var x = FixPlatform(MaskX);
             var y = FixPlatform(MaskY);
 
-            var maxside = Math.Max(rect.Width - maskWidth, rect.Height - maskHeight);
-            Size size = new NGraphics.Size(maxside + maskWidth, maxside + maskHeight);
+            var maskBounds = new Rect(x - maskWidth / 2, y - maskHeight / 2, maskWidth, maskHeight);
+            var backgroundPath = MakeBackgroundPathArray(controlBounds, maskBounds);
+            canvas.FillPath(backgroundPath, new SolidBrush(control.BackgroundColor.AsNColor()));
 
-            Pen borderPen = new Pen(control.BackgroundColor.AsNColor(), maxside);
-            var bounds = new Rect(new NGraphics.Point(x - size.Width / 2, y - size.Height / 2), size);
-            canvas.DrawRectangle(bounds, borderPen);
-
-
-            borderPen = CreateBorderPen(control);
-            var borderBounds = new Rect(x - maskWidth / 2, y - maskHeight / 2, maskWidth, maskHeight);
-            canvas.DrawRectangle(borderBounds, borderPen);
+            var borderPen = CreateBorderPen(control);
+            canvas.DrawRectangle(maskBounds, borderPen);
 
             canvas.DrawRectangle(new Rect(
-                new Point(borderBounds.X, borderBounds.Y + borderBounds.Height / 3),
-                new Size(borderBounds.Width, borderBounds.Height / 3)), borderPen);
+                new Point(maskBounds.X, maskBounds.Y + maskBounds.Height / 3),
+                new Size(maskBounds.Width, maskBounds.Height / 3)), borderPen);
 
             canvas.DrawRectangle(new Rect(
-                new Point(borderBounds.X + borderBounds.Width / 3, borderBounds.Y),
-                new Size(borderBounds.Width / 3, borderBounds.Height)), borderPen);
+                new Point(maskBounds.X + maskBounds.Width / 3, maskBounds.Y),
+                new Size(maskBounds.Width / 3, maskBounds.Height)), borderPen);
 
             if (CornerLength > 0 && CornerWidth > 0)
             {
-                canvas.DrawPath(MakeGridPathArray(borderBounds), new Pen(borderPen.Color, FixPlatform(CornerWidth)));
+                canvas.DrawPath(MakeGridPathArray(maskBounds), new Pen(borderPen.Color, FixPlatform(CornerWidth)));
             }
         }
 
-        protected virtual IEnumerable<PathOp> MakeGridPathArray(Rect r)
+        private IEnumerable<PathOp> MakeBackgroundPathArray(Rect fullBounds, Rect maskBounds)
+        {
+            return new List<PathOp>
+            {
+                new LineTo(maskBounds.TopLeft),
+                new LineTo(maskBounds.TopRight),
+                new LineTo(maskBounds.BottomRight),
+                new LineTo(maskBounds.BottomLeft),
+                new LineTo(maskBounds.TopLeft),
+                new LineTo(fullBounds.TopLeft),
+                new LineTo(fullBounds.BottomLeft),
+                new LineTo(fullBounds.BottomRight),
+                new LineTo(fullBounds.TopRight),
+                new LineTo(fullBounds.TopLeft)
+            };
+        }
+
+        protected virtual IEnumerable<PathOp> MakeGridPathArray(Rect maskBounds)
         {
             var length = FixPlatform(CornerLength);
             var path = new List<PathOp>{
-                new MoveTo(r.Left, r.Top + length),
-                new LineTo(r.Left, r.Top),
-                new LineTo(r.Left + length, r.Top),
+                new MoveTo(maskBounds.Left, maskBounds.Top + length),
+                new LineTo(maskBounds.Left, maskBounds.Top),
+                new LineTo(maskBounds.Left + length, maskBounds.Top),
 
-                new MoveTo(r.Right - length, r.Top),
-                new LineTo(r.Right, r.Top),
-                new LineTo(r.Right, r.Top + length),
+                new MoveTo(maskBounds.Right - length, maskBounds.Top),
+                new LineTo(maskBounds.Right, maskBounds.Top),
+                new LineTo(maskBounds.Right, maskBounds.Top + length),
 
-                new MoveTo(r.Right, r.Bottom - length),
-                new LineTo(r.Right, r.Bottom),
-                new LineTo(r.Right - length, r.Bottom),
+                new MoveTo(maskBounds.Right, maskBounds.Bottom - length),
+                new LineTo(maskBounds.Right, maskBounds.Bottom),
+                new LineTo(maskBounds.Right - length, maskBounds.Bottom),
 
-                new MoveTo(r.Left + length, r.Bottom),
-                new LineTo(r.Left, r.Bottom),
-                new LineTo(r.Left, r.Bottom - length),
-                new MoveTo(r.Left, r.Top + length),
+                new MoveTo(maskBounds.Left + length, maskBounds.Bottom),
+                new LineTo(maskBounds.Left, maskBounds.Bottom),
+                new LineTo(maskBounds.Left, maskBounds.Bottom - length),
+                new MoveTo(maskBounds.Left, maskBounds.Top + length),
                 new ClosePath()
             };
+
             return path;
         }
     }
