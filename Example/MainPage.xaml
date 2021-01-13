@@ -4,10 +4,17 @@
              xmlns:ui="clr-namespace:Ascetic.UI;assembly=Ascetic.Plugins.Cropper"
              x:Class="Example.MainPage">
 
-    <Grid RowDefinitions="60,*,35,*">
+    <Grid VerticalOptions="Fill">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="16"/>
+        </Grid.RowDefinitions>
 
         <ui:ImageCropperView x:Name="cropper" Grid.Row="1" PhotoSource="img" HorizontalOptions="Fill" VerticalOptions="FillAndExpand"
-                             BackgroundColor="#B3222222" BorderWidth="1" BorderColor="White" >
+                             BackgroundColor="#B3222222" BorderWidth="1" BorderColor="#A553E8" IsDashed="False" DashPatternSpace="6" DashPatternStroke="6">
             <ui:ImageCropperView.MaskPainter>
             <!-- MaskWidth and MaskHeight is mask proportions -->
             <!-- use rectangle painter -->
@@ -15,9 +22,12 @@
 
             <!-- figure like mirror frame -->
              <!--<ui:RectangleMaskPainter CornerRadius="25" Corners="TopLeft,TopRight" MaskWidth="1" MaskHeight="1.3" />--> 
-            <ui:GridMaskPainter MaskHeight="1" MaskWidth="1" CornerLength="15" CornerWidth="3"/>
+
             <!-- square with rounded corners -->
-            <!--<ui:RectangleMaskPainter CornerRadius="20" Corners="All" MaskWidth="1" MaskHeight="1" />-->
+            <!--<ui:RectangleMaskPainter CornerRadius="10" Corners="All" MaskWidth="2" MaskHeight="1" />-->
+
+            <!-- grid -->
+            <ui:GridMaskPainter MaskHeight="1" MaskWidth="1" CornerLength="15" CornerWidth="3"/>
 
             <!-- square -->
             <!--<ui:RectangleMaskPainter CornerRadius="20" Corners="None" MaskWidth="1" MaskHeight="1" />-->
@@ -26,14 +36,14 @@
             <!--<ui:CircleMaskPainter MaskHeight="1" MaskWidth="1.2"/>-->
 
             <!-- circle -->
-            <!--<ui:CircleMaskPainter MaskHeight="1" MaskWidth="1"/>-->
+            <!--<ui:CircleMaskPainter MaskHeight="1" MaskWidth="1.4"/>-->
            
             </ui:ImageCropperView.MaskPainter>
         </ui:ImageCropperView>
 
         <!--known issue on android: control background offside of control. So overlay it-->
-        <BoxView Color="White" Grid.Row="0"/>
-        <BoxView Color="White" Grid.Row="2" Grid.RowSpan="2"/>
+        <!--<BoxView Color="White" Grid.Row="0"/>
+        <BoxView Color="White" Grid.Row="2" Grid.RowSpan="2"/>-->
 
         <Label Text="Ascetic cropper" HorizontalTextAlignment="Center" TextColor="#A553E8" FontSize="36" VerticalTextAlignment="Center"/>
 
