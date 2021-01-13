@@ -203,16 +203,10 @@ namespace Ascetic.UI
                 if (w >= 100 && h >= 100)// && IsFitsIn(w, h)
                 {
                     if (w > imageWidth)
-                    {
-                        w = imageWidth;
-                        h = w * MaskPainter.MaskHeight / MaskPainter.MaskWidth;
-                    }
+                        w = h = imageWidth;
 
                     if (h > imageHeight)
-                    {
-                        h = imageHeight;
-                        w = h * MaskPainter.MaskWidth / MaskPainter.MaskHeight;
-                    }
+                        h = w = imageHeight;
 
                     var xminoffset = MaskPainter.MaskX - (horizontalPadding + w / 2);
                     var xmaxoffset = (horizontalPadding + imageWidth - w / 2) - MaskPainter.MaskX;
