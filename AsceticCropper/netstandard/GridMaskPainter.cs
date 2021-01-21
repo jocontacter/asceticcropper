@@ -66,7 +66,7 @@ namespace Ascetic.UI
         {
             return new List<PathOp>
             {
-                new LineTo(maskBounds.TopLeft),
+                new MoveTo(maskBounds.TopLeft),
                 new LineTo(maskBounds.TopRight),
                 new LineTo(maskBounds.BottomRight),
                 new LineTo(maskBounds.BottomLeft),

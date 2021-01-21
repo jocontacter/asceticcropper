@@ -171,15 +171,20 @@ namespace Ascetic.UI
             image.SizeChanged += Image_SizeChanged;
         }
 
+        private bool IsPanStarted;
         void PanGestureRecognizer_PanUpdated(System.Object sender, Xamarin.Forms.PanUpdatedEventArgs e)
         {
             if (e.StatusType == GestureStatus.Started)
             {
+                Console.WriteLine($"Pan STARTED coords X:{e.TotalX}, Y:{e.TotalY}");
                 startX = MaskPainter.MaskX;
                 startY = MaskPainter.MaskY;
+                IsPanStarted = true;
             }
-            else if (e.StatusType == GestureStatus.Running)
+            else if (e.StatusType == GestureStatus.Running && IsPanStarted)
             {
+                Console.WriteLine($"Pan coords X:{e.TotalX}, Y:{e.TotalY}" );
+
                 var translationX = startX + e.TotalX;
                 var translationY = startY + e.TotalY;
 
@@ -201,6 +206,7 @@ namespace Ascetic.UI
         {
             if (e.Status == GestureStatus.Running)
             {
+                Console.WriteLine("Pinch Scale: " + e.Scale);
                 var w = MaskPainter.MaskWidth * e.Scale;
                 var h = MaskPainter.MaskHeight * e.Scale;
 
@@ -240,13 +246,21 @@ namespace Ascetic.UI
 
                 MaskPainter.MaskWidth = w;
                 MaskPainter.MaskHeight = h;
-                if(MaskPainter is RectangleMaskPainter rectanglePainter)
+                if (MaskPainter is RectangleMaskPainter rectanglePainter)
                 {
                     var currentScale = MaskPainter.MaskWidth / originalMaskWidth;
                     rectanglePainter.CornerRadius = originalCornerRadius * currentScale * e.Scale;
                 }
 
                 MaskPainter.InvokeInvalidate();
+            }
+            else if (e.Status == GestureStatus.Completed || e.Status == GestureStatus.Canceled)
+            {
+                Console.WriteLine("Pinch Finished");
+            }
+            else if (e.Status == GestureStatus.Started)
+            {
+                Console.WriteLine("Pinch Started");
             }
         }
 
