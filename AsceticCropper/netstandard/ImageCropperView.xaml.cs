@@ -115,6 +115,23 @@ namespace Ascetic.UI
             set { SetValue(DashPatternSpaceProperty, value); }
         }
 
+        /// <summary>
+        /// ImageInformation.
+        /// </summary>
+        public static Xamarin.Forms.BindableProperty ImageInformationProperty =
+            Xamarin.Forms.BindableProperty.Create(nameof(ImageInformation), typeof(ImageInformation), typeof(ImageCropperView),
+                null, Xamarin.Forms.BindingMode.OneWayToSource);
+
+        /// <summary>
+        /// Gets or sets the ImageInformation. This is a bindable property.
+        /// </summary>
+        /// <value>ImageInformation.</value>
+        public ImageInformation ImageInformation
+        {
+            get => (ImageInformation)GetValue(ImageInformationProperty);
+            set => SetValue(ImageInformationProperty, value);
+        }
+
         public Xamarin.Forms.ImageSource PhotoSource => (Xamarin.Forms.ImageSource)GetValue(PhotoSourceProperty);
 
         protected override void OnPropertyChanged(string propertyName)
@@ -149,8 +166,6 @@ namespace Ascetic.UI
                     break;
             }
         }
-
-        ImageInformation ImageInformation { get; set; }
 
         double startX;
         double startY;
@@ -284,6 +299,14 @@ namespace Ascetic.UI
         }
 
         private void Image_SizeChanged(object sender, EventArgs e)
+        {
+            if (ImageInformation != null)
+            {
+                CalculateScale(ImageInformation);
+            }
+        }
+
+        public void InvalidateMaskLayout()
         {
             if (ImageInformation != null)
             {

@@ -50,7 +50,7 @@ namespace Ascetic.UI
             }
 
 
-            return null;
+            return new Pen(Xamarin.Forms.Color.Transparent.AsNColor());
         }
 
         public abstract void Paint(CropperControl control, ICanvas canvas, Rect rect);
