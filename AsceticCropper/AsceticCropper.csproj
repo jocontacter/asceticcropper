@@ -21,7 +21,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
     <Version>1.0.0.0</Version>
-    <PackageVersion>1.0.4</PackageVersion>
+    <PackageVersion>1.0.5</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>default</LangVersion>
@@ -39,13 +39,14 @@
     <RepositoryUrl>https://github.com/jocontacter/asceticcropper</RepositoryUrl>
     <PackageReleaseNotes>Added new painter: GridMaskPainter
 Fixed out of bounds issue
-Fixed scale - approximation effect after multiple gesture actions</PackageReleaseNotes>
+Fixed scale - approximation effect after multiple gesture actions
+Fixed ratio issues</PackageReleaseNotes>
     <PackageIconUrl>https://bitbucket.org/asceticsoft/downloads/downloads/ascetic_soft.png</PackageIconUrl>
     <PackageTags>xamarin, ios, android, xamarin.forms, plugin, AsceticCropper, cropper</PackageTags>
     
     <Title>Ascetic Cropper Plugin for Xamarin.Forms</Title>
     <Summary>cropper with multiple visual painters</Summary>
-    <Description>Cross platform(ios+android) cropper</Description>
+    <Description>Customizable cross-platform(ios+android) cropper</Description>
     
     
     <Owners>Ascetic Soft</Owners>

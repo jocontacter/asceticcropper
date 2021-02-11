@@ -172,8 +172,9 @@ namespace Ascetic.UI
         double imageScale;
         //to exclude approximations during multiple scalings in pinch gestures
         double originalMaskWidth;
-        double originalMaskScale;
+        double originalMaskRatio;
         double originalCornerRadius;
+        bool IsNearestHorizontal;
         double imageWidth;
         double imageHeight;
         double horizontalPadding;
@@ -198,7 +199,7 @@ namespace Ascetic.UI
             }
             else if (e.StatusType == GestureStatus.Running && IsPanStarted)
             {
-                Console.WriteLine($"Pan coords X:{e.TotalX}, Y:{e.TotalY}" );
+                //Console.WriteLine($"Pan coords X:{e.TotalX}, Y:{e.TotalY}" );
 
                 var translationX = startX + e.TotalX;
                 var translationY = startY + e.TotalY;
@@ -221,12 +222,23 @@ namespace Ascetic.UI
         {
             if (e.Status == GestureStatus.Running)
             {
-                Console.WriteLine("Pinch Scale: " + e.Scale);
-                var w = MaskPainter.MaskWidth * e.Scale;
-                var h = MaskPainter.MaskHeight * e.Scale;
+                //Console.WriteLine("Pinch Scale: " + e.Scale);
 
-                w = Clamp(w, 100, imageWidth);
-                h = Clamp(h, w / originalMaskScale, imageHeight);
+                double w;
+                double h;
+
+                if(IsNearestHorizontal)
+                {
+                    w = MaskPainter.MaskWidth * e.Scale;
+                    w = Clamp(w, 100, imageWidth);
+                    h = w / originalMaskRatio;
+                }
+                else
+                {
+                    h = MaskPainter.MaskHeight * e.Scale;
+                    h = Clamp(h, 100, imageHeight);
+                    w = h * originalMaskRatio;
+                }
 
                 var xminoffset = MaskPainter.MaskX - (horizontalPadding + w / 2);
                 var xmaxoffset = (horizontalPadding + imageWidth - w / 2) - MaskPainter.MaskX;
@@ -336,22 +348,23 @@ namespace Ascetic.UI
             Xamarin.Essentials.MainThread.InvokeOnMainThreadAsync(() => {
                 MaskPainter.MaskX = image.Width / 2;
                 MaskPainter.MaskY = image.Height / 2;
-                var min = Math.Min(imageWidth, imageHeight);
-                var maskScale = MaskPainter.MaskWidth / MaskPainter.MaskHeight;
+                //var min = Math.Min(imageWidth, imageHeight);
+                var maskRatio = MaskPainter.MaskWidth / MaskPainter.MaskHeight;
+                IsNearestHorizontal = imageRatio < maskRatio;
 
-                if (min == imageWidth)
+                if (IsNearestHorizontal)
                 {
                     MaskPainter.MaskWidth = imageWidth;
-                    MaskPainter.MaskHeight = MaskPainter.MaskWidth / maskScale;
+                    MaskPainter.MaskHeight = MaskPainter.MaskWidth / maskRatio;
                 }
                 else
                 {
                     MaskPainter.MaskHeight = imageHeight;
-                    MaskPainter.MaskWidth = MaskPainter.MaskHeight * maskScale;
+                    MaskPainter.MaskWidth = MaskPainter.MaskHeight * maskRatio;
                 }
 
                 //saving reference values 
-                originalMaskScale = maskScale;
+                originalMaskRatio = maskRatio;
                 originalMaskWidth = MaskPainter.MaskWidth;
                 originalCornerRadius = (MaskPainter as RectangleMaskPainter)?.CornerRadius ?? 0;
 
