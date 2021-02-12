@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <ui:ImageCropperView x:Name="cropper" Grid.Row="1" PhotoSource="img" HorizontalOptions="Fill" VerticalOptions="FillAndExpand"
-                             BackgroundColor="#B3222222" BorderWidth="1" BorderColor="#A553E8" IsDashed="False" DashPatternSpace="6" DashPatternStroke="6">
+                             BackgroundColor="#B3222222" BorderWidth="2" BorderColor="White" IsDashed="True" DashPatternSpace="3" DashPatternStroke="3">
             <ui:ImageCropperView.MaskPainter>
             <!-- MaskWidth and MaskHeight is mask proportions -->
             <!-- use rectangle painter -->
@@ -22,7 +22,7 @@
             <!-- OR(thanks to oleksandrtretiak) use grid painter -->
 
             <!-- figure like mirror frame -->
-             <!--<ui:RectangleMaskPainter CornerRadius="25" Corners="TopLeft,TopRight" MaskWidth="1" MaskHeight="1.3" />--> 
+             <ui:RectangleMaskPainter CornerRadius="25" Corners="TopLeft,BottomRight" MaskWidth="1" MaskHeight="1.3" /> 
 
             <!-- square -->
             <!--<ui:RectangleMaskPainter Corners="None" MaskWidth="1" MaskHeight="1" />-->
@@ -31,7 +31,7 @@
             <!--<ui:RectangleMaskPainter CornerRadius="10" Corners="All" MaskWidth="1" MaskHeight="1.3" />-->
 
             <!-- grid -->
-            <ui:GridMaskPainter MaskHeight="1" MaskWidth="1" CornerLength="15" CornerWidth="3"/>
+            <!--<ui:GridMaskPainter MaskHeight="1" MaskWidth="1" CornerLength="15" CornerWidth="3"/>-->
 
             <!-- oval -->
             <!--<ui:CircleMaskPainter MaskHeight="1.3" MaskWidth="1"/>-->
@@ -42,7 +42,7 @@
             </ui:ImageCropperView.MaskPainter>
         </ui:ImageCropperView>
 
-        <Label Text="Ascetic cropper" HorizontalTextAlignment="Center" TextColor="#A553E8" FontSize="36" VerticalTextAlignment="Center"/>
+        <Label Text="Ascetic cropper" HorizontalTextAlignment="Center" FontSize="36" VerticalTextAlignment="Center"/>
 
         <Button Grid.Row="2" Command="{Binding CropCommand}" Text="Crop!" HorizontalOptions="Center" WidthRequest="150"/>
         <Image Grid.Row="3" Source="{Binding ResultPhotoSource}" HorizontalOptions="Fill" VerticalOptions="FillAndExpand"/>
